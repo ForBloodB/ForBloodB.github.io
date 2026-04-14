@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ForBloodB | Personal Terminal</title>
+    <meta
+      name="description"
+      content="A DOS-inspired personal homepage with profile, projects, articles, and a future command console."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script>
+      document.documentElement.classList.add("js");
+    </script>
+  </head>
+  <body>
+    <div class="screen-noise" aria-hidden="true"></div>
+    <div class="scanlines" aria-hidden="true"></div>
+
+    <main class="page-shell">
+      <section class="panel hero-panel" aria-labelledby="site-title">
+        <div class="panel-header">
+          <span class="panel-title">SYSTEM BOOT</span>
+          <span class="panel-meta">PROFILE.EXE</span>
+        </div>
+
+        <div class="hero-grid">
+          <div class="boot-sequence">
+            <p class="prompt-line">C:\HOME&gt; boot profile.exe</p>
+            <pre
+              class="boot-log"
+              id="boot-log"
+              aria-live="polite"
+              data-lines='[
+                "Initializing personal terminal...",
+                "Loading profile modules...",
+                "Mounting featured projects...",
+                "Registering article index...",
+                "Command console status: TODO"
+              ]'
+            ><span class="boot-line">Initializing personal terminal...</span>
+<span class="boot-line">Loading profile modules...</span>
+<span class="boot-line">Mounting featured projects...</span>
+<span class="boot-line">Registering article index...</span>
+<span class="boot-line">Command console status: TODO</span></pre>
+            <p class="prompt-line">
+              C:\HOME&gt;<span class="cursor" aria-hidden="true"></span>
+            </p>
+          </div>
+
+          <div class="hero-copy">
+            <!-- EDIT: Replace this identity block with your own name, role, and short tagline. -->
+            <p class="eyebrow">PERSONAL TERMINAL / ONLINE</p>
+            <h1 id="site-title">FORBLOODB.EXE</h1>
+            <p class="hero-tagline">
+              Builder of curious web spaces, coding experiments, and notes from
+              the late-night debug zone.
+            </p>
+            <p class="hero-summary">
+              This page is designed as a DOS-inspired homepage where visitors
+              can quickly learn who I am, what I build, and what I write.
+            </p>
+
+            <div class="hero-links" aria-label="Primary links">
+              <!-- EDIT: Replace the href values below with your own links. -->
+              <a href="https://github.com/" target="_blank" rel="noreferrer"
+                >GitHub</a
+              >
+              <a href="https://x.com/" target="_blank" rel="noreferrer">X</a>
+              <a
+                href="https://www.linkedin.com/"
+                target="_blank"
+                rel="noreferrer"
+                >LinkedIn</a
+              >
+              <a href="mailto:hello@example.com">Email</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel content-panel" aria-labelledby="profile-heading">
+        <div class="panel-header">
+          <span class="panel-title">PERSONAL_PROFILE</span>
+          <span class="panel-meta">C:\BIO\README.TXT</span>
+        </div>
+
+        <div class="section-body">
+          <!-- EDIT: Replace this section with your personal background, interests, and current focus. -->
+          <h2 id="profile-heading">About the Operator</h2>
+          <p>
+            I am a developer who enjoys turning ideas into clean, interactive,
+            and slightly playful digital experiences. My favorite projects often
+            sit between design and engineering: small web tools, visual
+            experiments, and personal systems that make the internet feel more
+            human.
+          </p>
+          <p>
+            Right now, I am especially interested in front-end craftsmanship,
+            personal publishing, and building portfolio pieces that feel like
+            software instead of static pages.
+          </p>
+
+          <div class="info-grid" aria-label="Quick facts">
+            <!-- EDIT: Swap these labels and values for your own quick facts. -->
+            <article class="mini-card">
+              <span class="mini-label">Role</span>
+              <strong>Frontend Developer / Creative Coder</strong>
+            </article>
+            <article class="mini-card">
+              <span class="mini-label">Location</span>
+              <strong>Replace with your city or timezone</strong>
+            </article>
+            <article class="mini-card">
+              <span class="mini-label">Focus</span>
+              <strong>Interfaces, experiments, and personal tools</strong>
+            </article>
+            <article class="mini-card">
+              <span class="mini-label">Status</span>
+              <strong>Available for interesting collaborations</strong>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel content-panel" aria-labelledby="projects-heading">
+        <div class="panel-header">
+          <span class="panel-title">PROJECT_SHOWCASE</span>
+          <span class="panel-meta">D:\WORK\PROJECTS\</span>
+        </div>
+
+        <div class="section-body">
+          <h2 id="projects-heading">Highlighted Builds</h2>
+          <p class="section-intro">
+            Replace these sample projects with your own work. Each card is meant
+            to be short, readable, and easy to update directly in the HTML.
+          </p>
+
+          <div class="project-grid">
+            <!-- EDIT: Replace each project title, description, tags, and link. -->
+            <article class="project-card">
+              <div class="card-topline">
+                <span class="card-index">[01]</span>
+                <span class="status-pill">ACTIVE</span>
+              </div>
+              <h3>Terminal Portfolio Prototype</h3>
+              <p>
+                A retro-styled personal landing page that turns a standard
+                profile into a small software experience with motion, layout,
+                and personality.
+              </p>
+              <ul class="tag-list" aria-label="Project technologies">
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+              </ul>
+              <a href="https://github.com/" target="_blank" rel="noreferrer"
+                >Open Project</a
+              >
+            </article>
+
+            <article class="project-card">
+              <div class="card-topline">
+                <span class="card-index">[02]</span>
+                <span class="status-pill">LAB</span>
+              </div>
+              <h3>Visual Interaction Sandbox</h3>
+              <p>
+                A collection of small UI studies focused on motion, atmosphere,
+                and interaction patterns for unusual portfolio and landing page
+                concepts.
+              </p>
+              <ul class="tag-list" aria-label="Project technologies">
+                <li>UI Design</li>
+                <li>Animation</li>
+                <li>Prototype</li>
+              </ul>
+              <a href="https://github.com/" target="_blank" rel="noreferrer"
+                >Open Project</a
+              >
+            </article>
+
+            <article class="project-card">
+              <div class="card-topline">
+                <span class="card-index">[03]</span>
+                <span class="status-pill">ARCHIVE</span>
+              </div>
+              <h3>Personal Knowledge Notes</h3>
+              <p>
+                An evolving notebook for distilled technical writeups, code
+                snippets, and practical observations collected while building.
+              </p>
+              <ul class="tag-list" aria-label="Project technologies">
+                <li>Writing</li>
+                <li>Notes</li>
+                <li>Knowledge Base</li>
+              </ul>
+              <a href="https://github.com/" target="_blank" rel="noreferrer"
+                >Open Project</a
+              >
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel content-panel" aria-labelledby="articles-heading">
+        <div class="panel-header">
+          <span class="panel-title">FEATURED_ARTICLES</span>
+          <span class="panel-meta">C:\POSTS\FEATURED.LST</span>
+        </div>
+
+        <div class="section-body">
+          <h2 id="articles-heading">Featured Writing</h2>
+          <p class="section-intro">
+            This area is designed for prominent article links. Replace titles,
+            blurbs, and URLs with your real posts when ready.
+          </p>
+
+          <div class="article-grid">
+            <!-- EDIT: Replace the titles, descriptions, metadata, and href values below. -->
+            <a
+              class="article-card"
+              href="https://example.com/article-1"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span class="article-label">FEATURED / 01</span>
+              <h3>Designing a Homepage That Feels Like Software</h3>
+              <p>
+                Notes on creating portfolio pages with mood, mechanics, and a
+                stronger sense of authorship than a standard template.
+              </p>
+              <span class="article-meta">UI · Portfolio · Process</span>
+            </a>
+
+            <a
+              class="article-card"
+              href="https://example.com/article-2"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span class="article-label">FEATURED / 02</span>
+              <h3>Why Small Frontend Experiments Still Matter</h3>
+              <p>
+                A short reflection on how tiny interaction studies can sharpen
+                visual taste, technical instincts, and product thinking.
+              </p>
+              <span class="article-meta">Frontend · Experiments · Craft</span>
+            </a>
+
+            <a
+              class="article-card"
+              href="https://example.com/article-3"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <span class="article-label">FEATURED / 03</span>
+              <h3>Building Personal Sites That Age Well</h3>
+              <p>
+                A practical guide to making a personal web presence easy to
+                update, expressive to read, and durable over time.
+              </p>
+              <span class="article-meta">Writing · Web · Personal Site</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel content-panel" aria-labelledby="console-heading">
+        <div class="panel-header">
+          <span class="panel-title">COMMAND_CONSOLE</span>
+          <span class="panel-meta">TODO / FUTURE MODULE</span>
+        </div>
+
+        <div class="section-body">
+          <h2 id="console-heading">DOS Interaction Area</h2>
+          <div class="console-placeholder" role="note">
+            <p class="console-line">C:\HOME&gt; help</p>
+            <p class="console-line response-line">
+              TODO: interactive command mode will be implemented in a later
+              version.
+            </p>
+            <p class="console-line response-line">
+              Planned direction: quick profile commands, project shortcuts,
+              article navigation, and small hidden interactions.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
