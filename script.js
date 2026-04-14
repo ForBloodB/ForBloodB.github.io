@@ -1,34 +1,26 @@
-const bootLog = document.getElementById("boot-log");
+const bootDelayMs = 950;
+const clockNode = document.querySelector("[data-clock]");
 
-if (bootLog) {
-  const bootLines = Array.from(bootLog.querySelectorAll(".boot-line"));
-  const rawData = bootLog.dataset.lines;
-  let parsedLines = [];
-
-  try {
-    parsedLines = JSON.parse(rawData || "[]");
-  } catch (error) {
-    parsedLines = [];
+function updateClock() {
+  if (!clockNode) {
+    return;
   }
 
-  const lines = parsedLines.length > 0 ? parsedLines : bootLines.map((line) => line.textContent || "");
+  const now = new Date();
+  const timeFormatter = new Intl.DateTimeFormat("en-GB", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
 
-  if (document.documentElement.classList.contains("js") && lines.length > 0) {
-    bootLog.textContent = "";
-
-    lines.forEach((lineText, index) => {
-      const lineElement = document.createElement("span");
-      lineElement.className = "boot-line";
-      lineElement.textContent = lineText;
-
-      window.setTimeout(() => {
-        lineElement.classList.add("is-visible");
-        bootLog.append(lineElement);
-
-        if (index !== lines.length - 1) {
-          bootLog.append("\n");
-        }
-      }, 260 * index + 180);
-    });
-  }
+  clockNode.textContent = timeFormatter.format(now);
 }
+
+window.addEventListener("load", () => {
+  updateClock();
+  window.setInterval(updateClock, 30000);
+
+  window.setTimeout(() => {
+    document.body.classList.remove("is-booting");
+  }, bootDelayMs);
+});
