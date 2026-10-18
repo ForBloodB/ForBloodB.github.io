@@ -378,12 +378,88 @@
         </div>
       </section>
 
+      <div
+        class="start-menu"
+        id="start-menu"
+        role="menu"
+        aria-label="Start menu"
+        hidden
+      >
+        <div class="start-menu-header">
+          <img
+            class="start-menu-avatar"
+            src="https://github.com/ForBloodB.png?size=48"
+            alt=""
+            width="48"
+            height="48"
+          />
+          <span class="start-menu-user">ForBloodB</span>
+        </div>
+        <div class="start-menu-body">
+          <div class="start-menu-section">OPEN WINDOW</div>
+          <button
+            class="start-menu-item"
+            type="button"
+            role="menuitem"
+            data-window-target="personal"
+          >
+            <span class="start-menu-dot" aria-hidden="true"></span>PERSONAL INFO
+          </button>
+          <button
+            class="start-menu-item"
+            type="button"
+            role="menuitem"
+            data-window-target="profile"
+          >
+            <span class="start-menu-dot" aria-hidden="true"></span>PROFILE
+          </button>
+          <button
+            class="start-menu-item"
+            type="button"
+            role="menuitem"
+            data-window-target="expertise"
+          >
+            <span class="start-menu-dot" aria-hidden="true"></span>EXPERTISE
+          </button>
+          <button
+            class="start-menu-item"
+            type="button"
+            role="menuitem"
+            data-window-target="projects"
+          >
+            <span class="start-menu-dot" aria-hidden="true"></span>PROJECTS
+          </button>
+          <button
+            class="start-menu-item"
+            type="button"
+            role="menuitem"
+            data-window-target="papers"
+          >
+            <span class="start-menu-dot" aria-hidden="true"></span>PAPERS
+          </button>
+          <button
+            class="start-menu-item"
+            type="button"
+            role="menuitem"
+            data-window-target="awards"
+          >
+            <span class="start-menu-dot" aria-hidden="true"></span>AWARDS
+          </button>
+        </div>
+      </div>
+
       <footer class="taskbar">
         <div class="taskbar-left">
-          <div class="start-button">
+          <button
+            class="start-button"
+            type="button"
+            data-start-toggle
+            aria-haspopup="menu"
+            aria-expanded="false"
+          >
             <span class="start-badge" aria-hidden="true"></span>
             <span>START</span>
-          </div>
+          </button>
           <div class="quick-launch" aria-hidden="true">
             <span class="quick-icon"></span>
             <span class="quick-icon"></span>

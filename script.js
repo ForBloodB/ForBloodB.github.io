@@ -2,7 +2,14 @@ const bootDelayMs = 950;
 const clockNode = document.querySelector("[data-clock]");
 
 const windows = Array.from(document.querySelectorAll(".window"));
-const taskButtons = Array.from(document.querySelectorAll("[data-window-target]"));
+const taskButtons = Array.from(
+  document.querySelectorAll(".taskbar [data-window-target]")
+);
+const startMenuItems = Array.from(
+  document.querySelectorAll(".start-menu [data-window-target]")
+);
+const startMenu = document.getElementById("start-menu");
+const startToggle = document.querySelector("[data-start-toggle]");
 
 let zTop = 40;
 
@@ -83,6 +90,32 @@ function toggleWindow(id) {
     hideWindow(id);
   } else {
     focusWindow(id);
+  }
+}
+
+function openStartMenu() {
+  if (!startMenu || !startToggle) {
+    return;
+  }
+  startMenu.hidden = false;
+  startToggle.classList.add("is-active");
+  startToggle.setAttribute("aria-expanded", "true");
+}
+
+function closeStartMenu() {
+  if (!startMenu || !startToggle) {
+    return;
+  }
+  startMenu.hidden = true;
+  startToggle.classList.remove("is-active");
+  startToggle.setAttribute("aria-expanded", "false");
+}
+
+function toggleStartMenu() {
+  if (startMenu.hidden) {
+    openStartMenu();
+  } else {
+    closeStartMenu();
   }
 }
 
@@ -169,6 +202,37 @@ window.addEventListener("load", () => {
     button.addEventListener("click", () => {
       toggleWindow(button.dataset.windowTarget);
     });
+  });
+
+  if (startToggle) {
+    startToggle.addEventListener("click", (event) => {
+      event.stopPropagation();
+      toggleStartMenu();
+    });
+  }
+
+  startMenuItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      focusWindow(item.dataset.windowTarget);
+      closeStartMenu();
+    });
+  });
+
+  document.addEventListener("click", (event) => {
+    if (startMenu && !startMenu.hidden) {
+      if (
+        !event.target.closest(".start-menu") &&
+        !event.target.closest("[data-start-toggle]")
+      ) {
+        closeStartMenu();
+      }
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeStartMenu();
+    }
   });
 
   const first = windows[0];
