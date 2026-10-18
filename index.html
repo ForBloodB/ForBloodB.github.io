@@ -6,7 +6,7 @@
     <title>ForBloodB | Personal Workstation</title>
     <meta
       name="description"
-      content="A pixel-inspired personal homepage styled like an early GUI desktop."
+      content="Jingbo Zhang — FPGA Engineer, Computer Architecture, and Compiler Engineer. Personal homepage styled like a retro GUI desktop."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -48,17 +48,19 @@
 
               <!-- EDIT: Replace this block with your real personal information. -->
               <h1>ForBloodB</h1>
-              <p class="role-line">FPGA / EDA Researcher</p>
+              <p class="role-line">
+                FPGA Engineer · Computer Architecture · Compiler
+              </p>
               <p class="intro-copy">
-                Researcher in FPGA and EDA, focused on efficient computing
-                systems and practical design methodology exploration.
+                Working across the computing stack — from FPGA accelerators
+                and RISC-V architecture to HLS / MLIR compiler toolchains.
               </p>
 
               <dl class="info-grid">
                 <!-- EDIT: Replace the values below with your real details. -->
                 <div class="info-row">
                   <dt>Focus On</dt>
-                  <dd>FPGA acceleration, EDA algorithm, and RISC-V research</dd>
+                  <dd>FPGA acceleration, EDA algorithms, RISC-V architecture, and HLS / MLIR compilation</dd>
                 </div>
                 <div class="info-row">
                   <dt>Location</dt>
@@ -103,34 +105,114 @@
               </div>
             </aside>
 
+            <section
+              class="bottom-panel expertise-panel"
+              aria-labelledby="expertise-title"
+            >
+              <div class="panel-heading">EXPERTISE</div>
+              <div class="expertise-grid">
+                <article class="expertise-card">
+                  <h3>⚙️ FPGA Engineer</h3>
+                  <p>
+                    High-performance accelerators, HLS design flows, timing
+                    closure, and board-level bring-up.
+                  </p>
+                  <div class="expertise-tags">
+                    <span>Vivado</span><span>Vitis HLS</span><span>Verilator</span>
+                  </div>
+                </article>
+
+                <article class="expertise-card">
+                  <h3>🧠 Computer Architecture</h3>
+                  <p>
+                    RISC-V processor design, security cores, on-chip
+                    interconnect, and memory systems.
+                  </p>
+                  <div class="expertise-tags">
+                    <span>RISC-V</span><span>AXI / AMBA</span><span>SoC</span>
+                  </div>
+                </article>
+
+                <article class="expertise-card">
+                  <h3>🔧 Compiler Engineer</h3>
+                  <p>
+                    Hardware synthesis, MLIR-based optimization, and code
+                    generation for accelerators.
+                  </p>
+                  <div class="expertise-tags">
+                    <span>MLIR</span><span>LLVM</span><span>HLS</span><span>TAPA</span>
+                  </div>
+                </article>
+              </div>
+            </section>
+
+            <section
+              class="bottom-panel projects-panel"
+              aria-labelledby="projects-title"
+            >
+              <div class="panel-heading">PROJECTS</div>
+              <ul class="projects-list">
+                <li>
+                  <a
+                    href="https://github.com/ForBloodB/tapa"
+                    target="_blank"
+                    rel="noreferrer"
+                    >TAPA</a
+                  >
+                  — task-parallel HLS compiler → high-performance FPGA
+                  accelerators
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/ForBloodB/xls"
+                    target="_blank"
+                    rel="noreferrer"
+                    >XLS</a
+                  >
+                  — accelerated hardware synthesis (retargetable HLS &amp;
+                  optimization)
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/ForBloodB/SiliconTrace"
+                    target="_blank"
+                    rel="noreferrer"
+                    >SiliconTrace</a
+                  >
+                  — 硅迹开源 · Yosys / OpenROAD / SKY130 全流程开源芯片链路
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/ForBloodB/snake_game"
+                    target="_blank"
+                    rel="noreferrer"
+                    >snake_game</a
+                  >
+                  — 贪吃蛇小游戏（C++）
+                </li>
+              </ul>
+            </section>
+
             <div class="bottom-grid">
               <section class="bottom-panel papers-panel" aria-labelledby="papers-title">
                 <div class="panel-heading">PAPERS</div>
                 <!-- <h2 id="papers-title">Working Papers</h2> -->
 
                 <div class="record-list">
-                  <!-- EDIT: Replace these placeholders with your papers or preprints. -->
+                  <!-- EDIT: 在这里填写你的论文。复制下面的模板即可新增一条：
                   <article class="record-item">
-                    <div class="record-year">01</div>
+                    <div class="record-year">2026</div>
                     <div class="record-copy">
-                      <h3>Dummy</h3>
-                      <p>Dummy</p>
+                      <h3>论文标题</h3>
+                      <p>作者 · 会议 / 期刊 · 链接</p>
                     </div>
                   </article>
-
+                  -->
                   <article class="record-item">
-                    <div class="record-year">02</div>
+                    <div class="record-year">📄</div>
                     <div class="record-copy">
-                      <h3>Dummy</h3>
-                      <p>Dummy</p>
-                    </div>
-                  </article>
-
-                  <article class="record-item">
-                    <div class="record-year">03</div>
-                    <div class="record-copy">
-                      <h3>Dummy</h3>
-                      <p>Dummy</p>
+                      <h3>论文内容待补充</h3>
+                      <p>在这里填写论文标题、作者、会议 / 期刊与年份。</p>
                     </div>
                   </article>
                 </div>
@@ -141,28 +223,20 @@
                 <!-- <h2 id="awards-title">Awards</h2> -->
 
                 <div class="record-list">
-                  <!-- EDIT: Replace these placeholders with your actual awards. -->
+                  <!-- EDIT: 在这里填写你的奖项。复制下面的模板即可新增一条：
                   <article class="record-item">
-                    <div class="record-year">2025</div>
+                    <div class="record-year">2026</div>
                     <div class="record-copy">
-                      <h3>Award</h3>
-                      <p>Dummy</p>
+                      <h3>奖项名称</h3>
+                      <p>颁发机构 · 说明</p>
                     </div>
                   </article>
-
+                  -->
                   <article class="record-item">
-                    <div class="record-year">2024</div>
+                    <div class="record-year">🏆</div>
                     <div class="record-copy">
-                      <h3>Award</h3>
-                      <p>Dummy</p>
-                    </div>
-                  </article>
-
-                  <article class="record-item">
-                    <div class="record-year">2023</div>
-                    <div class="record-copy">
-                      <h3>Award</h3>
-                      <p>Dummy</p>
+                      <h3>奖项内容待补充</h3>
+                      <p>在这里填写奖项名称、颁发机构与年份。</p>
                     </div>
                   </article>
                 </div>
