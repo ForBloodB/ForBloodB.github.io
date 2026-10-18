@@ -39,6 +39,12 @@ body {
   background-color: #4f7ddb;
 }
 
+body.is-dragging {
+  user-select: none;
+}
+
+/* ---------- Boot screen ---------- */
+
 .boot-screen {
   position: fixed;
   inset: 0;
@@ -54,7 +60,7 @@ body {
 }
 
 .boot-window,
-.gui-window,
+.window,
 .taskbar,
 .start-button,
 .record-copy a {
@@ -73,7 +79,7 @@ body {
 
 .boot-title,
 .panel-heading,
-.title-bar-text,
+.window-title,
 .start-button,
 .task-button {
   font-family: "VT323", monospace;
@@ -112,103 +118,122 @@ body {
   animation: boot-move 1.2s steps(6, end) infinite;
 }
 
+/* ---------- Desktop & windows ---------- */
+
 .desktop {
   position: relative;
   min-height: 100vh;
-  padding: 26px 26px 90px;
+  padding: 20px 20px 90px;
 }
 
-.folder-icon {
-  position: relative;
-  display: inline-block;
-  flex: none;
-}
-
-.window-shell {
-  width: min(1120px, calc(100vw - 48px));
-  margin: 20px auto 0;
-}
-
-.gui-window {
+.window {
+  position: absolute;
+  z-index: 10;
   background: #dfe8f7;
   border-radius: 8px 8px 0 0;
   box-shadow:
-    0 10px 18px rgba(0, 0, 0, 0.2),
-    6px 6px 0 rgba(0, 0, 0, 0.14);
+    0 10px 18px rgba(0, 0, 0, 0.22),
+    5px 5px 0 rgba(0, 0, 0, 0.14);
 }
 
-.title-bar {
+.window.is-focused {
+  box-shadow:
+    0 16px 28px rgba(0, 0, 0, 0.3),
+    6px 6px 0 rgba(0, 0, 0, 0.16);
+}
+
+.window.is-minimized {
+  display: none;
+}
+
+.window--narrow {
+  width: min(340px, calc(100vw - 32px));
+}
+
+.window--medium {
+  width: min(480px, calc(100vw - 32px));
+}
+
+.window--wide {
+  width: min(720px, calc(100vw - 32px));
+}
+
+.window-titlebar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  padding: 8px 10px 7px;
+  padding: 7px 8px;
   color: #ffffff;
   background: linear-gradient(180deg, #2c7df0 0%, #1f66d8 50%, #0b55c6 100%);
-  border-radius: 6px 6px 0 0;
+  border-radius: 5px 5px 0 0;
+  cursor: move;
+  user-select: none;
 }
 
-.title-bar-text {
+.window:not(.is-focused) .window-titlebar {
+  background: linear-gradient(180deg, #7e9fdd 0%, #5d7fc0 50%, #3f66ad 100%);
+}
+
+.window-title {
   display: flex;
   align-items: center;
   gap: 8px;
   min-width: 0;
   font-size: 1.05rem;
+  pointer-events: none;
 }
 
 .window-app-dot {
   width: 10px;
   height: 10px;
+  flex: none;
   background: #f3f6ff;
   border: 2px solid #0f205b;
 }
 
-.title-bar-buttons {
+.window-controls {
   display: flex;
   gap: 6px;
+  flex: none;
 }
 
-.title-bar-buttons span {
+.window-btn {
   width: 20px;
   height: 18px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 3px;
   background: linear-gradient(180deg, #fefefe, #d9e2f7);
   border-top: 1px solid rgba(255, 255, 255, 0.92);
   border-left: 1px solid rgba(255, 255, 255, 0.92);
   border-right: 1px solid rgba(45, 82, 146, 0.85);
   border-bottom: 1px solid rgba(45, 82, 146, 0.85);
+  font-family: "VT323", monospace;
+  font-size: 1rem;
+  line-height: 1;
+  color: #10245c;
+  cursor: pointer;
 }
 
-.window-body {
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) 250px;
-  gap: 18px;
-  padding: 18px;
+.window-btn:hover {
+  background: linear-gradient(180deg, #ffffff, #e8eefb);
+}
+
+.window-btn--close:hover {
+  background: linear-gradient(180deg, #f6b3b3, #e2706f);
+  color: #ffffff;
+}
+
+.window-body-pane {
+  min-width: 0;
+  padding: 16px;
   background: linear-gradient(180deg, #eef4ff 0%, #d9e7fb 100%);
 }
 
-.overview-panel,
-.avatar-panel,
-.bottom-panel {
-  background: #fdfefe;
-  padding: 16px;
-  border: 1px solid #7ea2da;
-  border-radius: 6px;
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.72);
-}
-
-.overview-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.bottom-grid {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(240px, 1fr);
-  gap: 18px;
-}
+/* ---------- Content typography ---------- */
 
 .panel-heading {
   margin: -16px -16px 12px;
@@ -231,7 +256,7 @@ dl {
 h1 {
   margin-bottom: 6px;
   font-family: "VT323", monospace;
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(2rem, 4vw, 2.6rem);
   line-height: 1.1;
 }
 
@@ -263,6 +288,8 @@ h3 {
   line-height: 1.15;
 }
 
+/* ---------- Personal info ---------- */
+
 .info-grid {
   margin: 2px 0 0;
 }
@@ -288,6 +315,8 @@ h3 {
   margin: 0;
 }
 
+/* ---------- Profile ---------- */
+
 a {
   color: var(--link);
 }
@@ -302,12 +331,11 @@ a {
   color: #0b2f8d;
 }
 
-.avatar-panel {
+.profile-pane {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  align-self: start;
 }
 
 .avatar-frame {
@@ -358,13 +386,12 @@ a {
   line-height: 1.05;
 }
 
+/* ---------- Papers / Awards ---------- */
+
 .record-list {
   margin: 0;
   padding: 0;
   list-style: none;
-}
-
-.record-list {
   display: grid;
   gap: 12px;
 }
@@ -396,10 +423,7 @@ a {
   margin-bottom: 0;
 }
 
-.expertise-panel,
-.projects-panel {
-  grid-column: 1 / -1;
-}
+/* ---------- Expertise ---------- */
 
 .expertise-grid {
   display: grid;
@@ -442,6 +466,8 @@ a {
   border-radius: 3px;
 }
 
+/* ---------- Projects ---------- */
+
 .projects-list {
   margin: 0;
   padding: 0;
@@ -464,12 +490,14 @@ a {
   color: var(--link);
 }
 
+/* ---------- Taskbar ---------- */
+
 .taskbar {
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 10;
+  z-index: 100;
   display: grid;
   grid-template-columns: auto 1fr auto;
   gap: 10px;
@@ -497,6 +525,7 @@ a {
 .taskbar-center {
   min-width: 0;
   gap: 8px;
+  overflow-x: auto;
 }
 
 .start-button,
@@ -575,10 +604,21 @@ a {
   border-right: 2px solid rgba(9, 39, 113, 0.84);
   border-bottom: 2px solid rgba(9, 39, 113, 0.84);
   border-radius: 4px;
+  cursor: pointer;
+}
+
+.task-button.is-open {
+  background: linear-gradient(180deg, #3f66ad, #2c4f92);
+  box-shadow: inset 1px 1px 2px rgba(0, 0, 0, 0.35);
 }
 
 .task-button.is-active {
   background: linear-gradient(180deg, #74a1ff, #4a79dd);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.task-button.is-minimized {
+  opacity: 0.7;
 }
 
 .tray-icons {
@@ -623,43 +663,27 @@ a {
   .desktop {
     padding: 18px 18px 90px;
   }
-
-  .window-shell {
-    width: 100%;
-  }
-
-  .window-body {
-    grid-template-columns: 1fr;
-  }
-
-  .bottom-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 720px) {
-  .title-bar {
-    align-items: flex-start;
+  .desktop {
+    padding: 12px 12px 90px;
   }
 
-  .title-bar-text {
-    line-height: 1.6;
+  .window {
+    position: relative;
+    left: auto !important;
+    top: auto !important;
+    width: 100% !important;
+    margin: 0 0 14px;
   }
 
-  .title-bar-buttons {
-    display: none;
-  }
-
-  .window-body,
-  .overview-panel,
-  .avatar-panel,
-  .bottom-panel {
+  .window-body-pane {
     padding: 12px;
   }
 
   .info-row,
-  .record-item,
-  .taskbar {
+  .record-item {
     grid-template-columns: 1fr;
   }
 
