@@ -10,6 +10,7 @@ const startMenuItems = Array.from(
 );
 const startMenu = document.getElementById("start-menu");
 const startToggle = document.querySelector("[data-start-toggle]");
+const shutdownButtons = Array.from(document.querySelectorAll("[data-shutdown]"));
 
 let zTop = 40;
 
@@ -39,12 +40,14 @@ function syncTaskbar() {
       return;
     }
 
+    const closed = win.classList.contains("is-closed");
     const minimized = win.classList.contains("is-minimized");
     const focused = win.classList.contains("is-focused");
 
+    button.hidden = closed;
     button.classList.toggle("is-minimized", minimized);
-    button.classList.toggle("is-active", !minimized && focused);
-    button.classList.toggle("is-open", !minimized && !focused);
+    button.classList.toggle("is-active", !minimized && !closed && focused);
+    button.classList.toggle("is-open", !minimized && !closed && !focused);
   });
 }
 
@@ -55,6 +58,7 @@ function focusWindow(id) {
   }
 
   win.classList.remove("is-minimized");
+  win.classList.remove("is-closed");
 
   const wasFocused = win.classList.contains("is-focused");
   windows.forEach((w) => w.classList.toggle("is-focused", w === win));
@@ -67,13 +71,26 @@ function focusWindow(id) {
   syncTaskbar();
 }
 
-function hideWindow(id) {
+function minimizeWindow(id) {
   const win = getWindow(id);
   if (!win) {
     return;
   }
 
   win.classList.add("is-minimized");
+  win.classList.remove("is-closed");
+  win.classList.remove("is-focused");
+  syncTaskbar();
+}
+
+function closeWindow(id) {
+  const win = getWindow(id);
+  if (!win) {
+    return;
+  }
+
+  win.classList.add("is-closed");
+  win.classList.remove("is-minimized");
   win.classList.remove("is-focused");
   syncTaskbar();
 }
@@ -84,10 +101,13 @@ function toggleWindow(id) {
     return;
   }
 
-  if (win.classList.contains("is-minimized")) {
+  if (
+    win.classList.contains("is-closed") ||
+    win.classList.contains("is-minimized")
+  ) {
     focusWindow(id);
   } else if (win.classList.contains("is-focused")) {
-    hideWindow(id);
+    minimizeWindow(id);
   } else {
     focusWindow(id);
   }
@@ -119,6 +139,69 @@ function toggleStartMenu() {
   }
 }
 
+function saveGeometry(win) {
+  win.dataset.prevPosition = win.style.position;
+  win.dataset.prevLeft = win.style.left;
+  win.dataset.prevTop = win.style.top;
+  win.dataset.prevWidth = win.style.width;
+  win.dataset.prevHeight = win.style.height;
+}
+
+function restoreGeometry(win) {
+  win.style.position = win.dataset.prevPosition || "";
+  win.style.left = win.dataset.prevLeft || "";
+  win.style.top = win.dataset.prevTop || "";
+  win.style.width = win.dataset.prevWidth || "";
+  win.style.height = win.dataset.prevHeight || "";
+}
+
+function maximizeWindow(win) {
+  if (win.classList.contains("is-maximized")) {
+    return;
+  }
+
+  saveGeometry(win);
+
+  const pad = 6;
+  const taskbarHeight = 46;
+
+  win.style.position = "fixed";
+  win.style.left = `${pad}px`;
+  win.style.top = `${pad}px`;
+  win.style.width = `${window.innerWidth - pad * 2}px`;
+  win.style.height = `${window.innerHeight - taskbarHeight - pad * 2}px`;
+  win.classList.add("is-maximized");
+
+  focusWindow(win.dataset.window);
+}
+
+function restoreWindow(win) {
+  if (!win.classList.contains("is-maximized")) {
+    return;
+  }
+
+  restoreGeometry(win);
+  win.classList.remove("is-maximized");
+}
+
+function toggleMaximize(win) {
+  if (win.classList.contains("is-maximized")) {
+    restoreWindow(win);
+  } else {
+    maximizeWindow(win);
+  }
+}
+
+function shutdown() {
+  closeStartMenu();
+  document.body.classList.remove("is-booting");
+  document.body.classList.add("is-shutdown");
+}
+
+function reboot() {
+  window.location.reload();
+}
+
 function enableDrag(win) {
   if (window.matchMedia("(max-width: 720px)").matches) {
     return;
@@ -135,6 +218,10 @@ function enableDrag(win) {
     }
 
     if (event.target.closest(".window-controls")) {
+      return;
+    }
+
+    if (win.classList.contains("is-maximized")) {
       return;
     }
 
@@ -172,6 +259,13 @@ function enableDrag(win) {
     document.addEventListener("mousemove", onMove);
     document.addEventListener("mouseup", onUp);
   });
+
+  bar.addEventListener("dblclick", (event) => {
+    if (event.target.closest(".window-controls")) {
+      return;
+    }
+    toggleMaximize(win);
+  });
 }
 
 window.addEventListener("load", () => {
@@ -193,7 +287,11 @@ window.addEventListener("load", () => {
     win.querySelectorAll("[data-action]").forEach((button) => {
       button.addEventListener("click", (event) => {
         event.stopPropagation();
-        hideWindow(win.dataset.window);
+        if (button.dataset.action === "close") {
+          closeWindow(win.dataset.window);
+        } else {
+          minimizeWindow(win.dataset.window);
+        }
       });
     });
   });
@@ -218,7 +316,19 @@ window.addEventListener("load", () => {
     });
   });
 
+  shutdownButtons.forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.stopPropagation();
+      shutdown();
+    });
+  });
+
   document.addEventListener("click", (event) => {
+    if (document.body.classList.contains("is-shutdown")) {
+      reboot();
+      return;
+    }
+
     if (startMenu && !startMenu.hidden) {
       if (
         !event.target.closest(".start-menu") &&
@@ -230,6 +340,11 @@ window.addEventListener("load", () => {
   });
 
   document.addEventListener("keydown", (event) => {
+    if (document.body.classList.contains("is-shutdown")) {
+      reboot();
+      return;
+    }
+
     if (event.key === "Escape") {
       closeStartMenu();
     }

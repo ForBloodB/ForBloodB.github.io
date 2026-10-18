@@ -27,6 +27,11 @@
       </div>
     </div>
 
+    <div class="shutdown-screen" aria-hidden="true">
+      <p class="shutdown-text">It's now safe to turn off your computer.</p>
+      <p class="shutdown-hint">Press any key or click anywhere to reboot</p>
+    </div>
+
     <div class="desktop">
       <!-- PERSONAL INFO -->
       <section
@@ -444,6 +449,15 @@
             data-window-target="awards"
           >
             <span class="start-menu-dot" aria-hidden="true"></span>AWARDS
+          </button>
+          <div class="start-menu-divider" aria-hidden="true"></div>
+          <button
+            class="start-menu-item start-menu-item--shutdown"
+            type="button"
+            role="menuitem"
+            data-shutdown
+          >
+            <span class="start-menu-power" aria-hidden="true">⏻</span>SHUT DOWN
           </button>
         </div>
       </div>
