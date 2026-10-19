@@ -18,9 +18,8 @@
   </head>
   <body class="is-booting">
     <div class="boot-screen" aria-hidden="true">
-      <div class="boot-window">
-        <p class="boot-title">PERSONAL PROFILE</p>
-        <p class="boot-copy">Loading...</p>
+      <div class="boot-log" id="boot-log"></div>
+      <div class="boot-progress" id="boot-progress" hidden>
         <div class="boot-bar">
           <span class="boot-bar-fill"></span>
         </div>
@@ -29,7 +28,15 @@
 
     <div class="shutdown-screen" aria-hidden="true">
       <p class="shutdown-text">It's now safe to turn off your computer.</p>
-      <p class="shutdown-hint">Press any key or click anywhere to reboot</p>
+      <button
+        class="power-button"
+        type="button"
+        data-power-on
+        aria-label="Power on"
+      >
+        <span class="power-glyph" aria-hidden="true">⏻</span>
+      </button>
+      <p class="shutdown-hint">Press the power button to boot</p>
     </div>
 
     <div class="desktop">

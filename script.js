@@ -1,4 +1,3 @@
-const bootDelayMs = 950;
 const clockNode = document.querySelector("[data-clock]");
 
 const windows = Array.from(document.querySelectorAll(".window"));
@@ -11,8 +10,33 @@ const startMenuItems = Array.from(
 const startMenu = document.getElementById("start-menu");
 const startToggle = document.querySelector("[data-start-toggle]");
 const shutdownButtons = Array.from(document.querySelectorAll("[data-shutdown]"));
+const powerButtons = Array.from(document.querySelectorAll("[data-power-on]"));
+const bootLog = document.getElementById("boot-log");
+const bootProgress = document.getElementById("boot-progress");
 
 let zTop = 40;
+let bootTimers = [];
+
+const bootLines = [
+  { text: "ForBloodB BIOS v2.6.1", color: "#c0c0c0", delay: 350 },
+  { text: "CPU: V80 (RISC-V) @ 1.5 GHz", color: "#c0c0c0", delay: 400 },
+  { text: "Memory Test: 16384K OK", color: "#c0c0c0", delay: 400 },
+  { text: "Detecting storage ... OK", color: "#c0c0c0", delay: 350 },
+  { text: "", color: "", delay: 200 },
+  { text: "Loading bootloader ...", color: "#9cdcfe", delay: 450 },
+  { text: "Loading kernel image ...", color: "#9cdcfe", delay: 450 },
+  { text: "Decompressing kernel ... done.", color: "#9cdcfe", delay: 500 },
+  { text: "Booting the kernel.", color: "#9cdcfe", delay: 400 },
+  { text: "", color: "", delay: 150 },
+  { text: "[    0.000000] Booting Linux on RISC-V", color: "#4ec9b0", delay: 300 },
+  { text: "[    0.184223] CPU0: Online", color: "#4ec9b0", delay: 260 },
+  { text: "[    0.391024] FPGA accelerator: TAPA ready", color: "#4ec9b0", delay: 260 },
+  { text: "[    0.552110] HLS compiler: XLS loaded", color: "#4ec9b0", delay: 260 },
+  { text: "[    0.733301] Security core: initialized", color: "#4ec9b0", delay: 260 },
+  { text: "[    0.910005] Freeing unused kernel memory", color: "#4ec9b0", delay: 260 },
+  { text: "", color: "", delay: 120 },
+  { text: "Starting PERSONAL WORKSTATION ...", color: "#ffffff", delay: 400 },
+];
 
 function updateClock() {
   if (!clockNode) {
@@ -192,14 +216,90 @@ function toggleMaximize(win) {
   }
 }
 
+function appendBootLine(text, color) {
+  if (!bootLog) {
+    return;
+  }
+
+  const line = document.createElement("div");
+  line.className = "boot-line";
+  if (color) {
+    line.style.color = color;
+  }
+  line.textContent = text || "\u00A0";
+  bootLog.appendChild(line);
+  bootLog.scrollTop = bootLog.scrollHeight;
+}
+
+function clearBootTimers() {
+  bootTimers.forEach((timer) => window.clearTimeout(timer));
+  bootTimers = [];
+}
+
+function resetWindows() {
+  windows.forEach((win) => {
+    if (win.classList.contains("is-maximized")) {
+      restoreWindow(win);
+    }
+    win.classList.remove("is-minimized");
+    win.classList.remove("is-focused");
+    win.classList.add("is-closed");
+  });
+}
+
+function finishBoot() {
+  resetWindows();
+  document.body.classList.remove("is-booting");
+  document.body.classList.remove("is-shutdown");
+  syncTaskbar();
+}
+
+function runBootSequence() {
+  clearBootTimers();
+
+  if (bootLog) {
+    bootLog.textContent = "";
+  }
+  if (bootProgress) {
+    bootProgress.hidden = true;
+  }
+
+  let elapsed = 0;
+  bootLines.forEach((entry) => {
+    elapsed += entry.delay;
+    bootTimers.push(
+      window.setTimeout(() => {
+        appendBootLine(entry.text, entry.color);
+      }, elapsed)
+    );
+  });
+
+  const progressAt = elapsed + 350;
+  bootTimers.push(
+    window.setTimeout(() => {
+      if (bootProgress) {
+        bootProgress.hidden = false;
+      }
+    }, progressAt)
+  );
+
+  bootTimers.push(
+    window.setTimeout(() => {
+      finishBoot();
+    }, progressAt + 1400)
+  );
+}
+
 function shutdown() {
   closeStartMenu();
   document.body.classList.remove("is-booting");
   document.body.classList.add("is-shutdown");
 }
 
-function reboot() {
-  window.location.reload();
+function powerOn() {
+  document.body.classList.remove("is-shutdown");
+  document.body.classList.add("is-booting");
+  runBootSequence();
 }
 
 function enableDrag(win) {
@@ -272,9 +372,7 @@ window.addEventListener("load", () => {
   updateClock();
   window.setInterval(updateClock, 30000);
 
-  window.setTimeout(() => {
-    document.body.classList.remove("is-booting");
-  }, bootDelayMs);
+  runBootSequence();
 
   windows.forEach((win) => {
     enableDrag(win);
@@ -323,9 +421,15 @@ window.addEventListener("load", () => {
     });
   });
 
+  powerButtons.forEach((button) => {
+    button.addEventListener("click", (event) => {
+      event.stopPropagation();
+      powerOn();
+    });
+  });
+
   document.addEventListener("click", (event) => {
     if (document.body.classList.contains("is-shutdown")) {
-      reboot();
       return;
     }
 
@@ -341,7 +445,6 @@ window.addEventListener("load", () => {
 
   document.addEventListener("keydown", (event) => {
     if (document.body.classList.contains("is-shutdown")) {
-      reboot();
       return;
     }
 
@@ -349,9 +452,4 @@ window.addEventListener("load", () => {
       closeStartMenu();
     }
   });
-
-  const first = windows[0];
-  if (first) {
-    focusWindow(first.dataset.window);
-  }
 });

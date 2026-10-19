@@ -50,9 +50,12 @@ body.is-dragging {
   inset: 0;
   z-index: 900;
   display: none;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  background: #071e1f;
+  gap: 18px;
+  padding: 24px;
+  background: #000000;
 }
 
 .is-booting .boot-screen {
@@ -810,6 +813,80 @@ a {
   to {
     opacity: 1;
     transform: scale(1);
+  }
+}
+
+.boot-log {
+  width: min(760px, calc(100vw - 48px));
+  max-height: 68vh;
+  overflow-y: auto;
+  padding: 0 6px;
+  font-family: "VT323", monospace;
+  font-size: 1.4rem;
+  line-height: 1.3;
+  text-align: left;
+  color: #c0c0c0;
+}
+
+.boot-line {
+  min-height: 1.3em;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.boot-log::after {
+  content: "▌";
+  color: #9cdcfe;
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.boot-progress {
+  width: min(420px, calc(100vw - 48px));
+}
+
+.power-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  border: 3px solid #3a3a3a;
+  background: radial-gradient(circle at 50% 35%, #2a2a2a, #0c0c0c);
+  color: #ff8c00;
+  cursor: pointer;
+  animation: power-glow 2.2s ease-in-out infinite;
+}
+
+.power-button:hover {
+  border-color: #6a6a6a;
+  color: #ffb066;
+}
+
+.power-button:focus-visible {
+  outline: 3px dotted #ff8c00;
+  outline-offset: 4px;
+}
+
+.power-glyph {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+@keyframes power-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 10px rgba(255, 140, 0, 0.25);
+  }
+
+  50% {
+    box-shadow: 0 0 30px rgba(255, 140, 0, 0.6);
   }
 }
 
