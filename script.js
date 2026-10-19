@@ -18,23 +18,23 @@ let zTop = 40;
 let bootTimers = [];
 
 const bootLines = [
-  { text: "ForBloodB BIOS v2.6.1", color: "#c0c0c0", delay: 350 },
-  { text: "CPU: V80 (RISC-V) @ 1.5 GHz", color: "#c0c0c0", delay: 400 },
-  { text: "Memory Test: 16384K OK", color: "#c0c0c0", delay: 400 },
-  { text: "Detecting storage ... OK", color: "#c0c0c0", delay: 350 },
+  { text: "Award Modular BIOS v4.51PG", color: "#c0c0c0", delay: 400 },
+  { text: "(C) 1984-98, ForBloodB Technologies", color: "#c0c0c0", delay: 300 },
   { text: "", color: "", delay: 200 },
-  { text: "Loading bootloader ...", color: "#9cdcfe", delay: 450 },
-  { text: "Loading kernel image ...", color: "#9cdcfe", delay: 450 },
-  { text: "Decompressing kernel ... done.", color: "#9cdcfe", delay: 500 },
-  { text: "Booting the kernel.", color: "#9cdcfe", delay: 400 },
+  { text: "Main Processor : Intel 80486 DX2-66", color: "#c0c0c0", delay: 400 },
+  { text: "Co-Processor   : Installed", color: "#c0c0c0", delay: 300 },
+  { text: "Memory Test    : 640K OK", color: "#c0c0c0", delay: 450 },
+  { text: "                 31744K OK", color: "#c0c0c0", delay: 450 },
+  { text: "", color: "", delay: 200 },
+  { text: "Detecting IDE Primary Master ... Maxtor 7546AT", color: "#c0c0c0", delay: 450 },
+  { text: "Detecting IDE Primary Slave  ... None", color: "#c0c0c0", delay: 350 },
+  { text: "Detecting Floppy Drive A: ... 1.44M, 3.5 in.", color: "#c0c0c0", delay: 350 },
+  { text: "", color: "", delay: 200 },
+  { text: "Press DEL to enter SETUP ...", color: "#9cdcfe", delay: 450 },
+  { text: "Verifying DMI Pool Data ......... Done", color: "#c0c0c0", delay: 550 },
   { text: "", color: "", delay: 150 },
-  { text: "[    0.000000] Booting Linux on RISC-V", color: "#4ec9b0", delay: 300 },
-  { text: "[    0.184223] CPU0: Online", color: "#4ec9b0", delay: 260 },
-  { text: "[    0.391024] FPGA accelerator: TAPA ready", color: "#4ec9b0", delay: 260 },
-  { text: "[    0.552110] HLS compiler: XLS loaded", color: "#4ec9b0", delay: 260 },
-  { text: "[    0.733301] Security core: initialized", color: "#4ec9b0", delay: 260 },
-  { text: "[    0.910005] Freeing unused kernel memory", color: "#4ec9b0", delay: 260 },
-  { text: "", color: "", delay: 120 },
+  { text: "Starting MS-DOS ...", color: "#9cdcfe", delay: 450 },
+  { text: "HIMEM.SYS is testing extended memory ... done.", color: "#9cdcfe", delay: 550 },
   { text: "Starting PERSONAL WORKSTATION ...", color: "#ffffff", delay: 400 },
 ];
 
@@ -293,11 +293,18 @@ function runBootSequence() {
 function shutdown() {
   closeStartMenu();
   document.body.classList.remove("is-booting");
-  document.body.classList.add("is-shutdown");
+  document.body.classList.remove("is-shutdown");
+  document.body.classList.add("is-shutting-down");
+
+  window.setTimeout(() => {
+    document.body.classList.remove("is-shutting-down");
+    document.body.classList.add("is-shutdown");
+  }, 900);
 }
 
 function powerOn() {
   document.body.classList.remove("is-shutdown");
+  document.body.classList.remove("is-shutting-down");
   document.body.classList.add("is-booting");
   runBootSequence();
 }
